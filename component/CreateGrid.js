@@ -6,13 +6,12 @@ import { Input, Button, Grid, Spacer } from "@nextui-org/react";
 const CreateGrid = () => {
   const [width, setWidth] = useState(3);
   const [height, setHeight] = useState(3);
-  const grid = [];
 
-  //const [grid, setGrid] = useState();
   const rows = width;
   const cols = height;
 
   const createEmptyGrid = () => {
+    const grid = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
       for (let j = 0; j < cols; j++) {
@@ -24,6 +23,7 @@ const CreateGrid = () => {
   };
 
   const CreateRandomGrid = () => {
+    const grid = [];
     for (let i = 0; i < rows; i++) {
       const row = [];
       for (let j = 0; j < cols; j++) {
@@ -34,7 +34,7 @@ const CreateGrid = () => {
 
     return grid;
   };
-  CreateRandomGrid();
+
   const [randomGrid, setRandomGrid] = useState();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const CreateGrid = () => {
         }
       });
     });
-  }, []);
+  }, [rows, cols]);
 
   return (
     <>
@@ -148,20 +148,20 @@ const CreateGrid = () => {
               margin: "0 auto",
             }}
           >
-            {grid &&
-              grid.map((row, i) =>
+            {randomGrid &&
+              randomGrid.map((row, i) =>
                 row.map((col, k) => (
                   <div
                     className="table"
                     style={{
                       width: 20,
                       height: 20,
-                      backgroundColor: grid[i][k] ? "green" : undefined,
+                      backgroundColor: col ? "green" : undefined,
                       border: "1px solid black",
                     }}
                     onClick={() => {
-                      const newGrid = produce(grid, (gridCopy) => {
-                        gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                      const newGrid = produce(randomGrid, (gridCopy) => {
+                        gridCopy[i][k] = col ? 0 : 1;
                       });
                       console.log(newGrid);
                       setRandomGrid(newGrid);
